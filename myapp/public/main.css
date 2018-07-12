@@ -1,6 +1,10 @@
 body {
 	margin: 0;
 }
+
+#selectionParent {
+  overflow: hidden;
+}
 .choose-city-button {
 	display: flex;
 	align-items: center;
@@ -9,10 +13,24 @@ body {
 	color: white;
 	cursor: pointer;
 }
+
 .subDiv, .subDivs, .disDivs{
-	display: flex;
-	align-items: center;
+	font-size: 16px;
 	height: 40px;
 	border-bottom: 1px solid black;
 	cursor: pointer;
+	padding-top: 12px;
+	padding-left: 30px;
+	transform: translate(100%, 0);
+}
+
+.subDivr, .subDivsr, .disDivsr{
+	font-size: 16px;
+	height: 40px;
+	border-bottom: 1px solid black;
+	cursor: pointer;
+	padding-top: 12px;
+	padding-left: 30px;
+	transform: translate(0, 0);
+	transition: all 0.3s ease;
 }

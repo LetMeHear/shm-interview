@@ -1,54 +1,24 @@
-var data = [
-    {
-        name: "北京市",
-        city: [
-            {
-                name: "东城区",
-                district: ["东城区街道1",
-                    "东城区街道2",
-                    "东城区街道3",
-                    "东城区街道4",
-                    "东城区街道5"]
-            },
-            {
-                name: "西城区",
-                district: ["西城区街道1",
-                    "西城区街道2",
-                    "西城区街道3",
-                    "西城区街道4",
-                    "西城区街道5"]
-            }
-        ]
-    },
-    {
-        name: "河北省",
-        city: [
-            {
-                name: "石家庄市",
-                district: ["长安区",
-                    "桥东区",
-                    "桥西区",
-                    "新华区",
-                    "裕华区"]
-            },
-            {
-                name: "邯郸市",
-                district: ["丛台区",
-                    "邯山区",
-                    "复兴区",
-                    "峰峰矿区",
-                    "武安市"]
-            }
-        ]
+var datas = [];
+var data = {};
+function getData() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://localhost:3000/", true);
+    xhr.onreadystatechange = function() {
+        datas = xhr.responseText;
     }
-]
+    xhr.send(null);
+}
+getData();
 
 var btn = document.getElementById("selectionBtn");
 var parent = document.getElementById("selectionParent");
-var stString = ""; //这边声明了一个全局变量保存选择的字符串
+var stString = ""; //声明了一个全局变量保存选择的字符串
 
 function handleChoose() { //选择城市按钮处理事件
-    parent.removeChild(btn);
+
+    data = JSON.parse(datas);
+    stString = "";
+    parent.innerHTML = "";
     location.hash = "chooseProvince";
 
     var handler = function(index) {
@@ -56,9 +26,10 @@ function handleChoose() { //选择城市按钮处理事件
         subDiv.className = "subDiv";
         parent.appendChild(subDiv);
         subDiv.innerHTML = data[index].name;
-        console.log(subDiv.innerHTML);
+        setTimeout(() => {
+            subDiv.className += " subDivr";
+        }, 100);
     }
-
     for (var i = 0; i < data.length; i++) {
         handler(i);
     }
@@ -75,10 +46,11 @@ function handleChoose() { //选择城市按钮处理事件
                 parent.appendChild(subDivs);
                 subDivs.className = "subDivs";
                 subDivs.innerHTML = data[index].city[inde].name;
-                console.log(subDivs.innerHTML);
+                setTimeout(() => {
+                    subDivs.className += " subDivsr";
+                }, 100);
                 //处理选择什么区县
                 var districtDiv = document.getElementsByClassName("subDivs");
-                console.log(districtDiv.length);
 
                 for (var i = 0; i < districtDiv.length; i++) {
                     handleClickDis(i);
@@ -98,7 +70,9 @@ function handleChoose() { //选择城市按钮处理事件
                             parent.appendChild(disDivs);
                             disDivs.className = "disDivs";
                             disDivs.innerHTML = data[index].city[index1].district[index2];
-                            console.log(disDivs.innerHTML);
+                            setTimeout(() => {
+                                disDivs.className += " disDivsr";
+                            }, 100);
 
                             //处理最里层点击事件
                             var innestDiv = document.getElementsByClassName("disDivs");
