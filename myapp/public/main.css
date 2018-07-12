@@ -6,12 +6,24 @@ body {
   overflow: hidden;
 }
 .choose-city-button {
-	display: flex;
-	align-items: center;
-	height: 50px;
+	font-size: 16px;
+	padding: 12px 0 0 30px;
+	height: 34px;
 	background-color: gray;
 	color: white;
 	cursor: pointer;
+	transform: translate(100%, 0);
+}
+
+.chooseBtnr {
+	font-size: 16px;
+	padding: 12px 0 0 30px;
+	height: 34px;
+	background-color: gray;
+	color: white;
+	cursor: pointer;
+	transform: translate(0, 0);
+	transition: all 0.3s ease;	
 }
 
 .subDiv, .subDivs, .disDivs{
@@ -31,6 +43,15 @@ body {
 	cursor: pointer;
 	padding-top: 12px;
 	padding-left: 30px;
+	transform: translate(0, 0);
+	transition: all 0.3s ease;
+}
+
+.forChange {
+	transform: translate(100%, 0);
+}
+
+.forChanger {
 	transform: translate(0, 0);
 	transition: all 0.3s ease;
 }

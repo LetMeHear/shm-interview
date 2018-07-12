@@ -14,8 +14,13 @@ var btn = document.getElementById("selectionBtn");
 var parent = document.getElementById("selectionParent");
 var stString = ""; //声明了一个全局变量保存选择的字符串
 
+setTimeout(() => {
+    btn.className += " chooseBtnr";
+}, 100);
+
 function handleChoose() { //选择城市按钮处理事件
 
+    btn.className = "choose-city-button";
     data = JSON.parse(datas);
     stString = "";
     parent.innerHTML = "";
@@ -87,8 +92,13 @@ function handleChoose() { //选择城市按钮处理事件
                                     parent.appendChild(btn);
                                     var divText = document.createElement("p");
                                     divText.innerHTML = "所选城市：" + stString;
+                                    divText.className = "forChange";
                                     parent.appendChild(divText);
                                     location.hash = "";
+                                    setTimeout(() => {
+                                        btn.className += " chooseBtnr";
+                                        divText.className += " forChanger";
+                                    }, 100);
                                 }
                             }
                         }
