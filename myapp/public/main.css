@@ -1,0 +1,18 @@
+body {
+	margin: 0;
+}
+.choose-city-button {
+	display: flex;
+	align-items: center;
+	height: 50px;
+	background-color: gray;
+	color: white;
+	cursor: pointer;
+}
+.subDiv, .subDivs, .disDivs{
+	display: flex;
+	align-items: center;
+	height: 40px;
+	border-bottom: 1px solid black;
+	cursor: pointer;
+}
