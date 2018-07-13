@@ -1,6 +1,8 @@
 var datas = [];
 var data = {};
-function getData() {
+
+var status = 0; //页面是否点击过选择城市等，判断是否能进行回退
+function getData() { //获取data
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "http://localhost:3000/", true);
     xhr.onreadystatechange = function() {
@@ -20,11 +22,14 @@ setTimeout(() => {
 
 function handleChoose() { //选择城市按钮处理事件
 
+    status = 1;
+
     btn.className = "choose-city-button";
     data = JSON.parse(datas);
     stString = "";
     parent.innerHTML = "";
-    location.hash = "chooseProvince";
+    // location.hash = "chooseProvince";
+    pushHistory("", "#chooseProvince");
 
     var handler = function(index) {
         var subDiv = document.createElement("div");
@@ -42,9 +47,12 @@ function handleChoose() { //选择城市按钮处理事件
     var handleClickSub = function(index) { //城市选项按钮处理事件
         event.stopPropagation();
         cityDiv[index].onclick = function() {
+
+            status = 1;
             stString += cityDiv[index].innerHTML;
             parent.innerHTML = "";
-            location.hash = "chooseCity";
+            // location.hash = "chooseCity";
+            pushHistory("", "#chooseCity");
 
             var subHandler = function(inde) {
                 var subDivs = document.createElement("div");
@@ -63,9 +71,12 @@ function handleChoose() { //选择城市按钮处理事件
 
                 function handleClickDis(index1) {
                     districtDiv[index1].onclick = function() {
+
+                        status = 1;
                         stString += "-" + districtDiv[index1].innerHTML;
                         parent.innerHTML = "";
-                        location.hash = "chooseDistrict";
+                        // location.hash = "chooseDistrict";
+                        pushHistory("", "#chooseDistrict");
 
                         for (var i = 0; i < data[index].city[inde].district.length; i++) {
                             disHandler(i);
@@ -79,7 +90,7 @@ function handleChoose() { //选择城市按钮处理事件
                                 disDivs.className += " disDivsr";
                             }, 100);
 
-                            //处理最里层点击事件
+                            //处理最里层点击事件,选择街道，显示所选择的地区
                             var innestDiv = document.getElementsByClassName("disDivs");
 
                             for (var i = 0; i < innestDiv.length; i++) {
@@ -87,6 +98,8 @@ function handleChoose() { //选择城市按钮处理事件
                             }
                             function handleClickInn(index3) {
                                 innestDiv[index3].onclick = function() {
+
+                                    status = 0; //控制不要移除所选择的城市
                                     stString += "-" + innestDiv[index3].innerHTML;
                                     parent.innerHTML = "";
                                     parent.appendChild(btn);
@@ -115,3 +128,30 @@ function handleChoose() { //选择城市按钮处理事件
     }
 }
 
+window.addEventListener("popstate", function() {
+    var divs = document.getElementsByTagName("div");
+    if (status == 1) {
+        status = 0;
+        for (var i = 1; i <= divs.length; i++) {
+            handleRemove(i);
+        }
+        function handleRemove() {
+            parent.innerHTML = "";
+        }
+        parent.appendChild(btn);
+        if (btn.className == "choose-city-button") {
+            setTimeout(() => {
+                btn.className += " chooseBtnr";
+            }, 100);
+            location.hash = "";
+        }
+    }
+});
+
+function pushHistory(title, url) {
+    var state = {
+        title: title,
+        url: url
+    }
+    window.history.pushState(state, title, url);
+}
